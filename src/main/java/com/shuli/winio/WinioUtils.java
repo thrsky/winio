@@ -61,11 +61,10 @@ public class WinioUtils {
      * @param msg
      */
     public static void enter(String msg){
-        System.out.println(System.getProperty("os.arch"));
         NativeLibrary.addSearchPath("WinIo64", WinioUtils.class.getResource("/").getPath());
         NativeLibrary.addSearchPath("WinIo32", WinioUtils.class.getResource("/").getPath());
         if (!WinIo.INSTANCE.InitializeWinIo()) {
-            System.err.println("Cannot Initialize the WinIO");
+            logger.error("Cannot Initialize the WinIO");
             System.exit(1);
         }
         for (int i = 0; i < msg.length(); i++) {

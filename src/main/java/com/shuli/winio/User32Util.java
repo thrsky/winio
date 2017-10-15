@@ -5,6 +5,7 @@ import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.WinDef;
 
 public class User32Util {
+
     public static WinDef.LPARAM buildLPARAM(int vk, int flag){
         StringBuffer buffer = new StringBuffer();
         switch (flag){
