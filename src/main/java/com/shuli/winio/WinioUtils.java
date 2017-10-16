@@ -31,6 +31,15 @@ public class WinioUtils {
        // 禁用构造函数
     }
 
+    public static void setWinio32DllPath(String path){
+        WINIO_32_DLL_PATH = path;
+    }
+
+    public static void setWinio64DllPath(String path){
+        WINIO_64_DLL_PATH = path;
+    }
+
+
     private static void KeyDown(int key) throws Exception {
         User32Util.KBCWait4IBE();
         winIo.SetPortVal(WinIo.CONTROL_PORT, 0xd2, 1);
@@ -61,8 +70,8 @@ public class WinioUtils {
      * @param msg
      */
     public static void enter(String msg){
-        NativeLibrary.addSearchPath("WinIo64", WinioUtils.class.getResource("/").getPath());
-        NativeLibrary.addSearchPath("WinIo32", WinioUtils.class.getResource("/").getPath());
+        NativeLibrary.addSearchPath("WinIo64", WINIO_64_DLL_PATH);
+        NativeLibrary.addSearchPath("WinIo32", WINIO_32_DLL_PATH);
         if (!WinIo.INSTANCE.InitializeWinIo()) {
             logger.error("Cannot Initialize the WinIO");
             System.exit(1);

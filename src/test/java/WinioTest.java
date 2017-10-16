@@ -15,4 +15,15 @@ public class WinioTest {
             logger.error("init winioUtils error"+e.getMessage());
         }
     }
+
+    @Test
+    public void setPath(){
+        try{
+            WinioUtils.setWinio64DllPath("this error path");
+            WinioUtils.enter("error");
+        }catch (Exception e){
+            logger.error("error"+e.getMessage());
+        }
+
+    }
 }
