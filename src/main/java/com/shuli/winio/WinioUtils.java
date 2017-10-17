@@ -1,6 +1,5 @@
 package com.shuli.winio;
 
-import com.sun.jna.NativeLibrary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,17 +11,6 @@ public class WinioUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(WinioUtils.class);
     private static final WinIo winIo = WinIo.INSTANCE;
-    private static String WINIO_32_DLL_PATH = WinioUtils.class.getResource("/").getPath();
-    private static String WINIO_64_DLL_PATH = WinioUtils.class.getResource("/").getPath();
-
-    static {
-        NativeLibrary.addSearchPath("WinIo32", WINIO_32_DLL_PATH);
-        NativeLibrary.addSearchPath("WinIo64", WINIO_64_DLL_PATH);
-        if (!winIo.InitializeWinIo()) {
-            logger.error("Cannot Initialize the WinIO");
-            throw new IllegalStateException("Cannot Initialize the WinIO");
-        }
-    }
 
     /**
      * 禁用构造函数
@@ -30,15 +18,6 @@ public class WinioUtils {
     private WinioUtils(){
        // 禁用构造函数
     }
-
-    public static void setWinio32DllPath(String path){
-        WINIO_32_DLL_PATH = path;
-    }
-
-    public static void setWinio64DllPath(String path){
-        WINIO_64_DLL_PATH = path;
-    }
-
 
     private static void KeyDown(int key) throws Exception {
         User32Util.KBCWait4IBE();
@@ -70,8 +49,6 @@ public class WinioUtils {
      * @param msg
      */
     public static void enter(String msg){
-        NativeLibrary.addSearchPath("WinIo64", WINIO_64_DLL_PATH);
-        NativeLibrary.addSearchPath("WinIo32", WINIO_32_DLL_PATH);
         if (!WinIo.INSTANCE.InitializeWinIo()) {
             logger.error("Cannot Initialize the WinIO");
             System.exit(1);
@@ -81,7 +58,6 @@ public class WinioUtils {
                 KeyPress(msg.charAt(i));
             } catch (Exception e) {
                 logger.error("enter msg error"+ e.getMessage());
-                e.printStackTrace();
             }
         }
     }
